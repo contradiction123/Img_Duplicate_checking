@@ -45,21 +45,26 @@
             android:layout_height="match_parent"
             android:id="@+id/c1">
 
-            <com.example.s8534.imgduplicatechecking.ColorImageView
-                android:id="@+id/iv_civ"
-                android:layout_width="273dp"
-                android:layout_height="419dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                android:background="@mipmap/ic_launcher"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.343"
-                android:scaleType="fitXY"/>
+            <ImageView
+            android:id="@+id/iv_civ"
+            android:layout_width="273dp"
+            android:layout_height="419dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@mipmap/ic_launcher"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.343"
+            android:scaleType="fitXY"/>
+
+            <TextView
+                android:id="@+id/zhedang"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </android.support.constraint.ConstraintLayout>
 
     </RelativeLayout>

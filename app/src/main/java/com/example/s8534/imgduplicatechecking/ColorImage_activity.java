@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,22 +28,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ColorImage_activity extends AppCompatActivity implements AdapterView.OnItemClickListener {
-    ColorImageView mColorImageView;
+    ImageView mColorImageView;
     Button mTextView,but_cxxz;
-
-    int color1,color2;
     Bitmap bitmap1,bitmap2;
     Drawable drawable;
-    private String TAG = "Colorimageview";
-
+    TextView textView;
+    ConstraintLayout constraintLayout;
 
     private ArrayAdapter<String> adapter;
     private ListView mShowPathLv;
-    ConstraintLayout constraintLayout;
 
+    private int color1,color2;
     private  int count,sum_count;
-
     private int[][] x_y=new int[2][30];
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +59,7 @@ public class ColorImage_activity extends AppCompatActivity implements AdapterVie
 
 
         //找到控件
-        mColorImageView = (ColorImageView) findViewById(R.id.iv_civ);
+        mColorImageView = (ImageView) findViewById(R.id.iv_civ);
         mTextView = (Button) findViewById(R.id.tv_test);
         but_cxxz=(Button) findViewById(R.id.but_cxxz);
         but_cxxz.setOnClickListener(new View.OnClickListener() {
@@ -77,13 +76,9 @@ public class ColorImage_activity extends AppCompatActivity implements AdapterVie
         constraintLayout.setVisibility(View.GONE);
 
         mShowPathLv.setOnItemClickListener(this);
-        mColorImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                closeimg();
-            }
-        });
-        constraintLayout.setOnClickListener(new View.OnClickListener() {
+
+        textView=findViewById(R.id.zhedang);
+        textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 closeimg();
@@ -172,9 +167,7 @@ public class ColorImage_activity extends AppCompatActivity implements AdapterVie
 
     public void image(String img_path){
         Bitmap bmp= BitmapFactory.decodeFile(img_path);
-        Drawable drawable = new BitmapDrawable(getResources(),bmp);
-//        mColorImageView.setImageBitmap(bmp);
-        mColorImageView.setBackgroundDrawable(drawable);
+        mColorImageView.setImageBitmap(bmp);
         constraintLayout.setVisibility(View.VISIBLE);
     }
 
@@ -182,7 +175,9 @@ public class ColorImage_activity extends AppCompatActivity implements AdapterVie
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         //通过view获取其内部的组件，进而进行操作
         String s=mShowPathLv.getItemAtPosition(position)+"";
-        image(s);
+        if(s.charAt(0)=='/'){
+            image(s);
+        }
     }
 
     public void closeimg(){
