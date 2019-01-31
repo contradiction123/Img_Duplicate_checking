@@ -79,6 +79,9 @@ public class  All_img_path_Activity extends AppCompatActivity implements Adapter
         button_cxxz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                path_String.imagePathListname.clear();
+                path_String.imgsun=0;
+                path_String.pathstring="";
                 Intent intent2=new Intent(All_img_path_Activity.this,MainActivity.class);
                 startActivity(intent2);
             }

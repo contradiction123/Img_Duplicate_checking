@@ -65,6 +65,9 @@ public class ColorImage_activity extends AppCompatActivity implements AdapterVie
         but_cxxz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                path_String.imagePathListname.clear();
+                path_String.imgsun=0;
+                path_String.pathstring="";
                 Intent intent2=new Intent(ColorImage_activity.this,MainActivity.class);
                 startActivity(intent2);
             }
