@@ -8,10 +8,11 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="383dp"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@mipmap/login" />
+        android:src="@mipmap/login"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -76,4 +77,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.72" />
+
+
 </android.support.constraint.ConstraintLayout>

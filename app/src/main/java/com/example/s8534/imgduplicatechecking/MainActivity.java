@@ -108,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
             photo.setImageBitmap(bm);
             Intent intent2=new Intent(MainActivity.this,All_img_path_Activity.class);
             startActivity(intent2);
+            finish();
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

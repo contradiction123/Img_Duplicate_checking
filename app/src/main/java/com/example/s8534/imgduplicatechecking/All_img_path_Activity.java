@@ -73,6 +73,7 @@ public class  All_img_path_Activity extends AppCompatActivity implements Adapter
             public void onClick(View v) {
                 Intent intent2=new Intent(All_img_path_Activity.this,ColorImage_activity.class);
                 startActivity(intent2);
+                finish();
             }
         });
         button_cxxz=findViewById(R.id.button_cxxz);
@@ -84,9 +85,24 @@ public class  All_img_path_Activity extends AppCompatActivity implements Adapter
                 path_String.pathstring="";
                 Intent intent2=new Intent(All_img_path_Activity.this,MainActivity.class);
                 startActivity(intent2);
+                finish();
             }
         });
         mShowPathLv.setOnItemClickListener(this);
+    }
+    int count=0;
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+        if (count<1){
+            Toast.makeText(this,"exit?",Toast.LENGTH_SHORT).show();
+            count++;
+        }else {
+            path_String.imagePathListname.clear();
+            path_String.imgsun=0;
+            path_String.pathstring="";
+            finish();
+        }
     }
 
     /**

@@ -70,6 +70,7 @@ public class ColorImage_activity extends AppCompatActivity implements AdapterVie
                 path_String.pathstring="";
                 Intent intent2=new Intent(ColorImage_activity.this,MainActivity.class);
                 startActivity(intent2);
+                finish();
             }
         });
         mShowPathLv = (ListView) findViewById(R.id.lv_like_path);
@@ -173,7 +174,20 @@ public class ColorImage_activity extends AppCompatActivity implements AdapterVie
         mColorImageView.setImageBitmap(bmp);
         constraintLayout.setVisibility(View.VISIBLE);
     }
-
+    int count1=0;
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+        if (count1<1){
+            Toast.makeText(this,"exit?",Toast.LENGTH_SHORT).show();
+            count1++;
+        }else {
+            path_String.imagePathListname.clear();
+            path_String.imgsun=0;
+            path_String.pathstring="";
+            finish();
+        }
+    }
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         //通过view获取其内部的组件，进而进行操作
