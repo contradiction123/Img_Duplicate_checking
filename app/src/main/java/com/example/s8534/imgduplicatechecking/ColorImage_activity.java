@@ -174,6 +174,7 @@ public class ColorImage_activity extends AppCompatActivity implements AdapterVie
         mColorImageView.setImageBitmap(bmp);
         constraintLayout.setVisibility(View.VISIBLE);
     }
+
     int count1=0;
     @Override
     public void onBackPressed() {

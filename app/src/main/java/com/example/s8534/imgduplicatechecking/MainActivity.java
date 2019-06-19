@@ -11,6 +11,7 @@ package com.example.s8534.imgduplicatechecking;
         import android.support.v7.app.ActionBar;
         import android.support.v7.app.AppCompatActivity;
         import android.util.Log;
+        import android.view.KeyEvent;
         import android.view.View;
         import android.widget.Button;
         import android.widget.ImageView;
@@ -88,6 +89,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode==RESULT_CANCELED){
+            finish();
+        }
         if(requestCode == REQUEST_CHOOSE_IMAGE && resultCode == RESULT_OK) {
             Uri uri =  data.getData();
             Log.d("Tianma", "Uri = " + uri);
@@ -111,6 +115,16 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+            Toast.makeText(MainActivity.this,"1231",Toast.LENGTH_SHORT).show();
+            finish();//返回关闭当前Activity
+            return true;//应该是不在往下进行了
+        } else {
+            return super.dispatchKeyEvent(event);
+        }
     }
 
 }
