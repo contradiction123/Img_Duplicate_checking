@@ -1,51 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="25dp">
-        <Button
-            android:id="@+id/tv_test"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text=""
-            android:textColor="#000"
-            android:layout_weight="1"/>
-        <Button
-            android:id="@+id/but_cxxz"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="25dp">
+            <Button
+                android:id="@+id/but_cxxz"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="返回重选"
+                android:layout_weight="1.5"/>
+            <Button
+                android:id="@+id/tv_test"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text=""
+                android:textColor="#000"
+                android:layout_weight="1"
+                android:gravity="center"/>
+            <Button
+                android:id="@+id/but_exit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="退出"
+                android:layout_weight="1.5"/>
+        </LinearLayout>
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="重选"
-            android:layout_weight="3"/>
+            android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+id/lv_like_path"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:divider="@android:color/darker_gray"
+                android:dividerHeight="1dp"></ListView>
+
+        </RelativeLayout>
+
     </LinearLayout>
 
-
-    <RelativeLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/c1"
+        android:background="@drawable/shape">
 
-        <ListView
-            android:id="@+id/lv_like_path"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:divider="@android:color/darker_gray"
-            android:dividerHeight="1dp"></ListView>
-
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/c1">
-
-            <ImageView
+        <ImageView
             android:id="@+id/iv_civ"
             android:layout_width="273dp"
             android:layout_height="419dp"
@@ -61,12 +77,9 @@
             app:layout_constraintVertical_bias="0.343"
             android:scaleType="fitXY"/>
 
-            <TextView
-                android:id="@+id/zhedang"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </android.support.constraint.ConstraintLayout>
-
-    </RelativeLayout>
-
-</LinearLayout>
+        <TextView
+            android:id="@+id/zhedang"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </android.support.constraint.ConstraintLayout>
+</RelativeLayout>

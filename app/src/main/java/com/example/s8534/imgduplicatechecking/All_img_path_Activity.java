@@ -3,36 +3,50 @@ package com.example.s8534.imgduplicatechecking;
         import java.util.ArrayList;
         import java.util.List;
 
+        import android.Manifest;
+        import android.content.Context;
         import android.content.Intent;
+        import android.content.pm.PackageManager;
         import android.graphics.Bitmap;
         import android.graphics.BitmapFactory;
         import android.graphics.drawable.BitmapDrawable;
         import android.graphics.drawable.Drawable;
+        import android.net.Uri;
         import android.os.Bundle;
         import android.os.Environment;
         import android.annotation.SuppressLint;
         import android.app.Activity;
         import android.support.constraint.ConstraintLayout;
+        import android.support.v4.content.res.ResourcesCompat;
         import android.support.v7.app.ActionBar;
         import android.support.v7.app.AppCompatActivity;
+        import android.util.Log;
+        import android.view.LayoutInflater;
         import android.view.View;
+        import android.view.ViewGroup;
         import android.widget.AdapterView;
         import android.widget.ArrayAdapter;
         import android.widget.Button;
         import android.widget.ImageView;
         import android.widget.ListView;
+        import android.widget.TextView;
         import android.widget.Toast;
 
+        import com.example.s8534.imgduplicatechecking.adapter.ImageItmeAdapter;
+        import com.example.s8534.imgduplicatechecking.image.GetFileSize;
         import com.example.s8534.imgduplicatechecking.path.path_String;
+        import com.example.s8534.imgduplicatechecking.pojo.ImageItmepojo;
         import com.gyf.barlibrary.ImmersionBar;
 
 public class  All_img_path_Activity extends AppCompatActivity implements AdapterView.OnItemClickListener{
 
-    private ArrayAdapter<String> adapter;
+    private ImageItmeAdapter imageItmeAdapter;
     private ListView mShowPathLv;
     private Button rgbbutton,button_cxxz;
     private ConstraintLayout constraintLayout;
     private ImageView imageView;
+    private List<String> pahtlist;
+    List<ImageItmepojo> imageItmepojos=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,9 +78,31 @@ public class  All_img_path_Activity extends AppCompatActivity implements Adapter
                 constraintLayout.setVisibility(View.GONE);
             }
         });
-        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1);
-        adapter.addAll(getImagePathFromSD());
-        mShowPathLv.setAdapter(adapter);
+
+        pahtlist=getImagePathFromSD();
+        for(int a=0;a<pahtlist.size();a++){
+            ImageItmepojo imageItmepojo=new ImageItmepojo();
+            imageItmepojo.setPath_item(pahtlist.get(a));
+
+            imageItmepojo.setStyle_item(pahtlist.get(a).substring(pahtlist.get(a).lastIndexOf(".")+1));
+            imageItmepojo.setName_item(pahtlist.get(a).substring(pahtlist.get(a).lastIndexOf("/")+1,pahtlist.get(a).lastIndexOf(".")));
+            imageItmepojo.setSize_item(GetFileSize.getsize(pahtlist.get(a)));
+
+            imageItmepojos.add(imageItmepojo);
+        }
+
+        imageItmeAdapter = new ImageItmeAdapter(this,R.layout.image_itme,imageItmepojos);
+        mShowPathLv.setAdapter(imageItmeAdapter);
+
+
+
+//        addressAdapter = new AddressAdapter(AddressBActivity.this, R.layout.adressb_item, addresspojoList);
+//        contactsList = (ListView) findViewById(R.id.callView);
+//
+////        contactsList.setAdapter(arrayAdapter);
+//        contactsList.setAdapter(addressAdapter);
+
+
         rgbbutton=findViewById(R.id.rgbbutton);
         rgbbutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,7 +189,7 @@ public class  All_img_path_Activity extends AppCompatActivity implements Adapter
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        String s=mShowPathLv.getItemAtPosition(position)+"";
+        String s=pahtlist.get(position);
         image(s);
     }
     public void image(String img_path){
@@ -163,4 +199,6 @@ public class  All_img_path_Activity extends AppCompatActivity implements Adapter
         imageView.setImageBitmap(bmp);
         constraintLayout.setVisibility(View.VISIBLE);
     }
+
+
 }

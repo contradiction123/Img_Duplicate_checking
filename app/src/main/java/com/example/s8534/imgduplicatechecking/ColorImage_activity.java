@@ -1,5 +1,6 @@
 package com.example.s8534.imgduplicatechecking;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,7 +12,9 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -20,7 +23,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.s8534.imgduplicatechecking.adapter.ImageItmeAdapter;
+import com.example.s8534.imgduplicatechecking.image.GetFileSize;
 import com.example.s8534.imgduplicatechecking.path.path_String;
+import com.example.s8534.imgduplicatechecking.pojo.ImageItmepojo;
 import com.gyf.barlibrary.ImmersionBar;
 
 import java.io.File;
@@ -29,18 +35,21 @@ import java.util.List;
 
 public class ColorImage_activity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     ImageView mColorImageView;
-    Button mTextView,but_cxxz;
+    Button mTextView,but_cxxz,but_exit;
     Bitmap bitmap1,bitmap2;
     Drawable drawable;
     TextView textView;
     ConstraintLayout constraintLayout;
 
-    private ArrayAdapter<String> adapter;
     private ListView mShowPathLv;
 
     private int color1,color2;
     private  int count,sum_count;
     private int[][] x_y=new int[2][30];
+    private List<String> pathlist=new ArrayList<>();
+
+    private List<ImageItmepojo> imageItmepojoList=new ArrayList<>();
+    private ImageItmeAdapter imageItmeAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +83,6 @@ public class ColorImage_activity extends AppCompatActivity implements AdapterVie
             }
         });
         mShowPathLv = (ListView) findViewById(R.id.lv_like_path);
-        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1);
 
         constraintLayout=findViewById(R.id.c1);
         constraintLayout.setVisibility(View.GONE);
@@ -86,6 +94,17 @@ public class ColorImage_activity extends AppCompatActivity implements AdapterVie
             @Override
             public void onClick(View v) {
                 closeimg();
+            }
+        });
+
+        but_exit=findViewById(R.id.but_exit);
+        but_exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                path_String.imagePathListname.clear();
+                path_String.imgsun=0;
+                path_String.pathstring="";
+                finish();
             }
         });
 
@@ -124,12 +143,31 @@ public class ColorImage_activity extends AppCompatActivity implements AdapterVie
                 sum_count+=imagePathList.size();
                 imagePathList.add(path_String.imagePathListname.get(ij));//这里要加上作为判断的图
                 imagePathList.set(0,imagePathList.get(0)+"，有"+(imagePathList.size()-1)+"个");//这里要减去没组相同的组号
-                adapter.addAll(imagePathList);
-                mShowPathLv.setAdapter(adapter);
+
+                ImageItmepojo ipojo=new ImageItmepojo();
+                ipojo.setText_zu(imagePathList.get(0));
+                imageItmepojoList.add(ipojo);
+
+                pathlist.add(imagePathList.get(0));
+
+                for(int a=1;a<imagePathList.size();a++){
+                    ImageItmepojo imageItmepojo=new ImageItmepojo();
+                    imageItmepojo.setPath_item(imagePathList.get(a));
+                    imageItmepojo.setStyle_item(imagePathList.get(a).substring(imagePathList.get(a).lastIndexOf(".")+1));
+                    imageItmepojo.setName_item(imagePathList.get(a).substring(imagePathList.get(a).lastIndexOf("/")+1,imagePathList.get(a).lastIndexOf(".")));
+                    imageItmepojo.setSize_item(GetFileSize.getsize(imagePathList.get(a)));
+
+                    imageItmepojoList.add(imageItmepojo);
+
+                    pathlist.add(imagePathList.get(a));
+                }
+
                 imagePathList.clear();
             }
             mTextView.setText("共"+count+"组，共"+sum_count+"张");
         }
+        imageItmeAdapter = new ImageItmeAdapter(this,R.layout.image_itme,imageItmepojoList);
+        mShowPathLv.setAdapter(imageItmeAdapter);
     }
     public boolean select_img(int s,int now){
         String img_path = path_String.imagePathListname.get(s);
@@ -192,7 +230,7 @@ public class ColorImage_activity extends AppCompatActivity implements AdapterVie
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         //通过view获取其内部的组件，进而进行操作
-        String s=mShowPathLv.getItemAtPosition(position)+"";
+        String s=pathlist.get(position);
         if(s.charAt(0)=='/'){
             image(s);
         }
@@ -201,4 +239,5 @@ public class ColorImage_activity extends AppCompatActivity implements AdapterVie
     public void closeimg(){
         constraintLayout.setVisibility(View.GONE);
     }
+
 }

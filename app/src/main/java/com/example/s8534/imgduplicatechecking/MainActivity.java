@@ -30,9 +30,6 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_WRITE_EXTERNAL_PERMISSION_GRANT = 0xff;
 
-    private TextView photoPath;
-    private ImageView photo;
-    public Button start1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,16 +45,6 @@ public class MainActivity extends AppCompatActivity {
         if(actionBar!=null)actionBar.hide();
 
 
-        start1=findViewById(R.id.start);
-        start1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Toast.makeText(MainActivity.this, "132", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-        photoPath = (TextView) findViewById(R.id.photo_path);
-        photo = (ImageView) findViewById(R.id.photo);
         prepareToOpenAlbum();
     }
 
@@ -99,17 +86,13 @@ public class MainActivity extends AppCompatActivity {
             Log.d("Tianma", "realPath = " + path);
 
 //            photoPath.setVisibility(View.VISIBLE);
-            photoPath.setText(path);
+
             String[] all=path.split("/");
             String paths="";
             for(int i=1;i<all.length-1;i++){
                 paths+="/"+all[i];
             }
             path_String.pathstring=paths.trim();
-            int requiredHeight = photo.getHeight();
-            int requiredWidth = photo.getWidth();
-            Bitmap bm = ImageUtils.decodeSampledBitmapFromDisk(path, requiredWidth, requiredHeight);
-            photo.setImageBitmap(bm);
             Intent intent2=new Intent(MainActivity.this,All_img_path_Activity.class);
             startActivity(intent2);
             finish();
